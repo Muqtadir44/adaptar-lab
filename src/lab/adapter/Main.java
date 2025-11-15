@@ -2,17 +2,25 @@ package lab.adapter;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== Adapter Pattern Demo: Payment Integration ===");
+        System.out.println("=== Adapter + Decorator + Multi-Currency Demo ===");
 
-        // legacy service (pretend this is from an external jar)
-        LegacyPaymentService legacyService = new LegacyPaymentService("MERCHANT-123");
+        LegacyPaymentService legacy = new LegacyPaymentService("MERCHANT-123");
 
-        // adapter exposes the new interface
-        PaymentGateway gateway = new PaymentAdapter(legacyService);
+        PaymentAdapter adapter = new PaymentAdapter(legacy);
 
-        // Application code uses PaymentGateway (dollars)
-        gateway.pay(19.99);   // sample 1
-        gateway.pay(5.0);     // sample 2
-        gateway.pay(0.555);   // sample to test rounding behavior (should become 56 cents)
+        // Decorator wraps adapter
+        PaymentGateway gateway = new LoggingPaymentGateway(adapter);
+
+        // Normal payments
+        gateway.pay(19.99);
+        gateway.pay(5.00);
+        gateway.pay(0.555); // rounding test
+
+        // Refund test
+        gateway.refund(9.50);
+
+        // Multi-currency tests
+        adapter.pay(10, "EUR");
+        adapter.pay(100, "PKR");
     }
 }
