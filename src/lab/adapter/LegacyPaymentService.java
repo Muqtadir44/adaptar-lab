@@ -17,8 +17,15 @@ public class LegacyPaymentService {
     public void makePayment(int cents) {
         // Simulate some legacy behavior and print to stdout
         System.out.println("[LegacyPaymentService] Merchant: " + merchantId
-            + " | Payment received: " + cents + " cents");
+                + " | Payment received: " + cents + " cents");
         // Pretend some internal checks happen here...
         System.out.println("[LegacyPaymentService] Status: PAYMENT_OK");
+    }
+
+    // NEW — simulate legacy refund
+    public void refundPayment(int cents) {
+        System.out.println("[LegacyPaymentService] Merchant: " + merchantId
+                + " | Refund issued: " + cents + " cents");
+        System.out.println("[LegacyPaymentService] Status: REFUND_OK");
     }
 }

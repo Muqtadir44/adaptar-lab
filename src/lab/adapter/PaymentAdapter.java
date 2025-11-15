@@ -18,4 +18,11 @@ public class PaymentAdapter implements PaymentGateway {
         System.out.println("[PaymentAdapter] Converting $" + dollars + " -> " + cents + " cents");
         legacy.makePayment(cents);
     }
+
+    @Override
+    public void refund(double dollars) {
+        int cents = (int) Math.round(dollars * 100);
+        System.out.println("[PaymentAdapter] Converting refund $" + dollars + " -> " + cents + " cents");
+        legacy.refundPayment(cents);
+    }
 }
